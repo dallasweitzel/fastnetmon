@@ -31,10 +31,10 @@ def rochsshadd(blacklistip):
       remote_conn = ssh.invoke_shell()
       time.sleep(0.300)
       thecmd = []
-      #thecmd.append(":execute \"/routing bgp network add network="+str(blacklistip)+" comment="+str(blacklistip)+" synchronize=no; :delay 10s; /routing bgp network remove [find comment="+str(blacklistip)+"];\"")
-      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=accept place-before=0;\"")
-      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=passthrough place-before=0\"")
-      #thecmd.append(":execute \"/ip route add comment="+str(blacklistip)+" distance=1 dst-address="+str(blacklistip)+" type=blackhole\"")
+      thecmd.append(":execute \"/routing bgp network add network="+str(blacklistip)+" comment="+str(blacklistip)+" synchronize=no;\"")
+      thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=accept place-before=0;\"")
+      thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=passthrough place-before=0\"")
+      thecmd.append(":execute \"/ip route add comment="+str(blacklistip)+" distance=1 dst-address="+str(blacklistip)+" type=blackhole\"")
       thecmd.append(":log info \"blackhole: "+str(blacklistip)+"\";")
       for cmd in thecmd:
         stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout))
@@ -75,10 +75,9 @@ def rochsshdel(blacklistip):
       remote_conn = ssh.invoke_shell()
       time.sleep(0.300)
       thecmd = []
-      #thecmd.append(":execute \"/routing bgp network add network="+str(blacklistip)+" comment="+str(blacklistip)+" synchronize=no; :delay 10s; /routing bgp network remove [find comment="+str(blacklistip)+"];\"")
-      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=accept place-before=0;\"")
-      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=passthrough place-before=0\"")
-      #thecmd.append(":execute \"/ip route add comment="+str(blacklistip)+" distance=1 dst-address="+str(blacklistip)+" type=blackhole\"")
+      #thecmd.append(":execute \"/routing bgp network remove [find comment="+str(blacklistip)+"];\"")
+      #thecmd.append(":execute \"/routing filter remove [find comment="+str(blacklistip)+" and chain=ebgp-out];\"")
+      #thecmd.append(":execute \"/ip rou remove [find comment="+str(blacklistip)+"]\"")
       thecmd.append(":log info \"blackhole removal: "+str(blacklistip)+"\";")
       for cmd in thecmd:
         stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout))
@@ -155,19 +154,21 @@ while True:
       #print("IP: "+i)
       if i not in active:
         #print("Not in active")
-        active.append(i)
-        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 1"
-        #print(str(cgnatcmd))
-        thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
-        rochsshadd(str(i))
-        print("DDOS HIT: "+str(i))
-        #thecgnat = ""
-        #thecgnat = tracking[i]
-        #if i not in activeddos:
-        #  print("We set a active ddos for cgnat "+str(i))
-        #  activeddos.append(i)
-        #else:
-        #  print("")
+        m = re.search(r"204.16.58.150\/\d+", i)
+        if not m:
+          active.append(i)
+          cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 1"
+          #print(str(cgnatcmd))
+          thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
+          rochsshadd(str(i))
+          print("DDOS HIT: "+str(i))
+          #thecgnat = ""
+          #thecgnat = tracking[i]
+          #if i not in activeddos:
+          #  print("We set a active ddos for cgnat "+str(i))
+          #  activeddos.append(i)
+          #else:
+          #  print("")
     # lets check to see if a ddos is gone, we only want to remove if all the ddos are gone
     for i in active:
       #print("Active IP: "+i)
