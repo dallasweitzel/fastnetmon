@@ -127,7 +127,7 @@ while True:
     # lets check to see if a ddos is gone, we only want to remove if all the ddos are gone
     for i in active:
       #print("Active IP: "+i)
-      if i not in active:
+      if i not in ips:
         print("We are just removing the blackhole")
         #rochsshdel(str(i))
       if len(ips) == 0:
