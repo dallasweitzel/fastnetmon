@@ -79,8 +79,8 @@ def rochsshdel():
     thecmd.append("/ip rou remove [find comment=blacklisted]")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
-      stdin,stdout,stderr = ssh.exec_command(cmd, get_pty=True, timeout=float(cmdtimeout))
-      time.sleep(0.300)
+      stdin,stdout,stderr = ssh.exec_command(cmd, get_pty=True)
+      time.sleep(1.000)
     theoutput = stdout.readlines()
     ssh.close()
     if ssh:
