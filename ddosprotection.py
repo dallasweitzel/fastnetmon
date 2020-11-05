@@ -132,9 +132,9 @@ active = []
 activeddos = []
 datadict = {}
 while True:
-  data = requests.get(url, auth=(username, password)).content
-  datadict = json.loads(data)
   try:
+    data = requests.get(url, auth=(username, password)).content
+    datadict = json.loads(data)
     ips = []
     thedict = datadict['values']
     # making list
