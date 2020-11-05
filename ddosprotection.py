@@ -14,8 +14,8 @@ def ssh(ip,username,password,port,thecmd,conntimeout,cmdtimeout):
   # lets remove any new lines
   ip = ip.rstrip("\n\r")
   theoutput = []
+  ssh = paramiko.SSHClient()
   try:
-    ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     #print('connecting to %s' % ip + 'end')
     ssh.connect(hostname=str(ip), port=str(port), username=str(username), password=str(password), look_for_keys=False, allow_agent=False, timeout=float(conntimeout))
@@ -32,6 +32,8 @@ def ssh(ip,username,password,port,thecmd,conntimeout,cmdtimeout):
       ssh.close()
       #print("closed ssh conn"+str(e))
     pass
+  if ssh:
+    ssh.close()
   return theoutput
 
 thedict = {}
