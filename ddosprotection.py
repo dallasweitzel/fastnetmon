@@ -75,8 +75,8 @@ def rochsshdel():
     time.sleep(0.300)
     thecmd = []
     thecmd.append("/routing bgp network remove [find comment=blacklisted];")
-    thecmd.append("/routing filter remove [find comment=blacklisted and chain=ebgp-out];")
-    thecmd.append("/ip rou remove [find comment=blacklisted];")
+    thecmd.append("/routing filter remove [find comment=blacklisted and chain=ebgp-out]; /ip rou remove [find comment=blacklisted];")
+    #thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
       stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout), get_pty=True)
