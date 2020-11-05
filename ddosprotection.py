@@ -31,7 +31,7 @@ while True:
  
   # looking for new ddos
   for i in ips:
-    print("IP: "+i)
+    #print("IP: "+i)
     if i not in active:
       print("Not in active")
       active.append(i)
@@ -42,5 +42,6 @@ while True:
     print("Active IP: "+i)
     if i not in ips:
       print("Not longer in IPS")
+      active.remove(i)
 
   time.sleep(1)
