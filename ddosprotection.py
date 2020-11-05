@@ -20,7 +20,7 @@ while True:
     for i in thedict:
       #print(i)
       for e in i:
-        #print(i[e])
+        print(i[e])
         #print(e)
         ip = i[e]
         m = re.search(r"(\d+\.\d+\.\d+\.\d+)\/\d+", ip)
