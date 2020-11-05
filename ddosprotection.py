@@ -52,6 +52,21 @@ def rochsshadd(blacklistip):
     pass
   return theoutput
 
+#def rochsshdel():
+#  import time
+#  ip = "204.16.58.150"
+#  username = "admin"
+#  password = "3110"
+#  port = 22
+#  cmd = "/routing bgp network remove [find comment=blacklisted]; /routing filter remove [find comment=blacklisted and chain=ebgp-out]; /ip rou remove [find comment=blacklisted];"
+#  read = list()
+#  read = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+#  #read.wait()
+#  #print("wait")
+#  #for line in read.stdout.readlines():
+#  m = ""
+#  for line in read.stdout.readlines(): 
+    
 def rochsshdel():
   import paramiko
   import time
@@ -74,13 +89,13 @@ def rochsshdel():
     remote_conn = ssh.invoke_shell()
     time.sleep(0.300)
     thecmd = []
-    thecmd.append("/routing bgp network remove [find comment=blacklisted];")
-    thecmd.append("/routing filter remove [find comment=blacklisted and chain=ebgp-out]; /ip rou remove [find comment=blacklisted];")
+    #thecmd.append("/routing bgp network remove [find comment=blacklisted];")
+    thecmd.append("/routing bgp network remove [find comment=blacklisted]; /routing filter remove [find comment=blacklisted and chain=ebgp-out]; /ip rou remove [find comment=blacklisted];")
     #thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
-      stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout), get_pty=True)
-      time.sleep(5)
+      stdin,stdout,stderr = ssh.exec_command(cmd, bufsize=-1, timeout=float(cmdtimeout))
+      time.sleep(0.300)
     theoutput = stdout.readlines()
     ssh.close()
     if ssh:
