@@ -70,7 +70,7 @@ while True:
         active.append(i)
         cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
         ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
-        #print("DDOS HIT: "+str(i))
+        print("DDOS HIT: "+str(i))
         #thecgnat = ""
         #thecgnat = tracking[i]
         #if i not in activeddos:
