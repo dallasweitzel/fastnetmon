@@ -39,7 +39,7 @@ while True:
 
   # lets check to see if a ddos is gone
   for i in active:
-    print("Active IP: "+i)
+    #print("Active IP: "+i)
     if i not in ips:
       print("Not longer in IPS")
       active.remove(i)
