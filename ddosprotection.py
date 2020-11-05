@@ -60,7 +60,7 @@ def rochsshdel():
   password = "3110"
   port = 22
   conntimeout = 60
-  cmdtimeout = 120
+  cmdtimeout = 60
   theoutput = []
   # lets remove any new lines
   ip = ip.rstrip("\n\r")
@@ -79,7 +79,7 @@ def rochsshdel():
     thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
-      stdin,stdout,stderr = ssh.exec_command(cmd, get_pty=True, timeout=float(cmdtimeout))
+      stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout))
       time.sleep(1)
     theoutput = stdout.readlines()
     ssh.close()
@@ -178,6 +178,8 @@ while True:
         if removalisdone == 0:
           rochsshdel()
           removalisdone = 1
+          print("removal commands sent")
+          time.sleep(30)
         cgnatcmd = ":put \"OK\"; :log info \"blackhole removed: "+str(i)+"\"; :global ddosdetected 0"
         #print(str(cgnatcmd))
         print("DDOS is gone, flipping redundancies...: "+str(i))
