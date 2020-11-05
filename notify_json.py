@@ -131,7 +131,7 @@ try:
     if len(thereturn) == 0:
       logging.info("Action: Failed to ssh to Roch to stop the attack: 204.16.58.150")
   if gaction == "unban":
-    #
+    print("unban")
   # + parsed_details['attack_details']['total_incoming_flows'])
 except Exception as ex:
   logging.info("Action Error: "+str(ex))
