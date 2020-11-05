@@ -5,7 +5,9 @@ username = 'admin'
 password = '3110'
 data = ""
 datadict = {}
+thedict = {}
 data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
+thedict = datadict['values'])
 for i in datadict:
-  print(datadict['values'])
+  print(i)
