@@ -1,3 +1,5 @@
-import urllib
-with urllib.request.urlopen('http://python.org/') as response:
-   html = response.read()
+import requests
+url = 'https://updates.opendns.com/nic/update?hostname='
+username = 'username'
+password = 'password'
+print(requests.get(url, auth=(username, password)).content)
