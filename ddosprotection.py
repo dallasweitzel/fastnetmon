@@ -19,14 +19,12 @@ def ssh(ip,username,password,port,thecmd,conntimeout,cmdtimeout):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     #print('connecting to %s' % ip + 'end')
     ssh.connect(hostname=str(ip), port=str(port), username=str(username), password=str(password), look_for_keys=False, allow_agent=False, timeout=float(conntimeout))
-    #print('Successfully connected to %s' % ip)
+    print('Successfully connected to %s' % ip)
     remote_conn = ssh.invoke_shell()
     time.sleep(0.001)
     stdin,stdout,stderr = ssh.exec_command(thecmd, timeout=float(cmdtimeout))
     theoutput = stdout.readlines()
     ssh.close()
-    if ssh:
-      ssh.close()
   except Exception as e:
     if ssh:
       ssh.close()
@@ -71,7 +69,7 @@ while True:
         #print("Not in active")
         active.append(i)
         cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
-        print(str(cgnatcmd))
+        #print(str(cgnatcmd))
         thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
         print("DDOS HIT: "+str(i))
         #thecgnat = ""
