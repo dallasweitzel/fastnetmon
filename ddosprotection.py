@@ -128,7 +128,9 @@ while True:
     for i in active:
       #print("Active IP: "+i)
       if i not in ips:
-        print("We are just removing the blackhole")
+        print("We are just removing the blackhole "+str(i))
+        #once we do this once, lets remove it from active
+        active.remove(str(i))
         #rochsshdel(str(i))
       if len(ips) == 0:
         print("DDOS is gone: "+str(i))
