@@ -8,9 +8,11 @@ password = '3110'
 data = ""
 
 thedict = {}
-tracking = {}
-tracking['64.62.238.202'] = '64.62.238.2'
-tracking['64.62.238.203'] = '64.62.238.2'
+#tracking = {}
+#tracking['64.62.238.202'] = '64.62.238.2'
+#tracking['64.62.238.203'] = '64.62.238.2'
+#for i in tracking:
+#  tracking[i]
 active = []
 activeddos = []
 datadict = {}
@@ -41,11 +43,13 @@ while True:
         #print("Not in active")
         active.append(i)
         print("DDOS HIT: "+str(i))
-        thecgnat = ""
-        thecgnat = tracking[i]
+        #thecgnat = ""
+        #thecgnat = tracking[i]
         if thecgnat not in activeddos:
           print("We set a active ddos for cgnat"+str(thecgnat))
           activeddos.append(thecgnat)
+        else:
+          print("")
     # lets check to see if a ddos is gone
     for i in active:
       #print("Active IP: "+i)
