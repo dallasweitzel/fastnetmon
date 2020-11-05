@@ -86,7 +86,8 @@ def rochsshdel():
     #print('connecting to %s' % ip + 'end')
     ssh.connect(hostname=str(ip), port=str(port), username=str(username), password=str(password), look_for_keys=False, allow_agent=False, timeout=float(conntimeout))
     #print('Successfully connected to %s' % ip)
-    remote_conn = ssh.invoke_shell()
+    #remote_conn = ssh.invoke_shell()
+    channel = ssh.get_transport().open_session()
     time.sleep(0.300)
     thecmd = []
     #thecmd.append("/routing bgp network remove [find comment=blacklisted];")
@@ -94,8 +95,8 @@ def rochsshdel():
     #thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
-      stdin,stdout,stderr = ssh.exec_command(cmd, timeout=60)
-    while not ssh.exit_status_ready():
+      stdin,stdout,stderr = channel.exec_command(cmd, timeout=60)
+    while not channel.exit_status_ready():
       time.sleep(1)
       #time.sleep(0.300)
     theoutput = stdout.readlines()
