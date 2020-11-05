@@ -14,6 +14,7 @@ datadict = {}
 while True:
   data = requests.get(url, auth=(username, password)).content
   datadict = json.loads(data)
+  print(datadict)
   if len(datadict['values']) > 0:
     thedict = datadict['values']
     # making list
