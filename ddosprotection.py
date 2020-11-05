@@ -93,8 +93,9 @@ def rochsshdel():
     thecmd.append("/routing bgp network remove [find comment=blacklisted]; /routing filter remove [find comment=blacklisted and chain=ebgp-out]; :do {/ip rou remove [find comment=blacklisted];} on-error={:put \"OK\"}")
     #thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
+    ssh.setblocking(0)
     for cmd in thecmd:
-      stdin,stdout,stderr = ssh.send(cmd)
+      stdin,stdout,stderr = ssh.exec_command(cmd, bufsize=-1, timeout=60)
       time.sleep(0.300)
     theoutput = stdout.readlines()
     ssh.close()
