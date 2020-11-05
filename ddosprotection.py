@@ -1,5 +1,5 @@
 import requests
-url = 'https://updates.opendns.com/nic/update?hostname='
-username = 'username'
-password = 'password'
+url = 'http://127.0.0.1:10007/license'
+username = 'admin'
+password = '3110'
 print(requests.get(url, auth=(username, password)).content)
