@@ -7,6 +7,50 @@ username = 'admin'
 password = '3110'
 data = ""
 
+def rochsshadd(blacklistip):
+  import paramiko
+  import time
+  ip = "204.16.58.150"
+  username = "admin"
+  password = "3110"
+  port = 22
+  conntimeout = 10
+  cmdtimeout = 10
+  theoutput = []
+  # lets remove any new lines
+  ip = ip.rstrip("\n\r")
+  theoutput = []
+  try:
+    ssh = paramiko.SSHClient()
+    m = re.search(r"\d+\.\d+\.\d+\.\d+", blacklistip)
+    if m:
+      ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+      #print('connecting to %s' % ip + 'end')
+      ssh.connect(hostname=str(ip), port=str(port), username=str(username), password=str(password), look_for_keys=False, allow_agent=False, timeout=float(conntimeout))
+      #print('Successfully connected to %s' % ip)
+      remote_conn = ssh.invoke_shell()
+      time.sleep(0.300)
+      thecmd = []
+      #thecmd.append(":execute \"/routing bgp network add network="+str(blacklistip)+" comment="+str(blacklistip)+" synchronize=no; :delay 10s; /routing bgp network remove [find comment="+str(blacklistip)+"];\"")
+      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=accept place-before=0;\"")
+      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=passthrough place-before=0\"")
+      #thecmd.append(":execute \"/ip route add comment="+str(blacklistip)+" distance=1 dst-address="+str(blacklistip)+" type=blackhole\"")
+      thecmd.append(":log info \"blackhole: "+str(blacklistip)+"\";")
+      for cmd in thecmd:
+        stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout))
+        time.sleep(0.300)
+      theoutput = stdout.readlines()
+      ssh.close()
+    if ssh:
+      ssh.close()
+  except Exception as e:
+    if ssh:
+      ssh.close()
+      logging.info("Could not ssh to rochfiber"+str(e))
+      #print("closed ssh conn"+str(e))
+    pass
+  return theoutput
+
 def ssh(ip,username,password,port,thecmd,conntimeout,cmdtimeout):
   import paramiko
   import time
@@ -71,6 +115,7 @@ while True:
         cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 1"
         #print(str(cgnatcmd))
         thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
+        rochsshadd(str(i))
         print("DDOS HIT: "+str(i))
         #thecgnat = ""
         #thecgnat = tracking[i]
