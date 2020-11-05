@@ -71,7 +71,7 @@ while True:
         #print("Not in active")
         active.append(i)
         cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
-        ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
+        thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
         print("DDOS HIT: "+str(i))
         #thecgnat = ""
         #thecgnat = tracking[i]
