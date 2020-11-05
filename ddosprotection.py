@@ -6,10 +6,10 @@ password = '3110'
 data = ""
 datadict = {}
 data = requests.get(url, auth=(username, password)).content
-datadict = json.loads(data[0])
+datadict = json.loads(data)
 print(str(data))
 
-for i in datadict:
+for i in datadict[1]:
   line = datadict[i]
   print("Each: "+str(line))
   for k in line:
