@@ -11,4 +11,4 @@ datadict = json.loads(data)
 thedict = datadict['values']
 for i in thedict:
   for e in i:
-    print(i[e]['ip'])
+    print(i[e][1])
