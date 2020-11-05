@@ -6,6 +6,6 @@ password = '3110'
 data = ""
 datadict = {}
 data = requests.get(url, auth=(username, password)).content
-#blackholed_hosts = json.loads(data)
-for i in data:
+datadict = json.loads(data)
+for i in datadict:
   print(i)
