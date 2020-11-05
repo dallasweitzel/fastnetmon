@@ -8,13 +8,14 @@ password = '3110'
 data = ""
 
 thedict = {}
-ips = []
+
 active = []
 datadict = {}
 while True:
   data = requests.get(url, auth=(username, password)).content
   datadict = json.loads(data)
   try:
+    ips = []
     thedict = datadict['values']
     # making list
     for i in thedict:
