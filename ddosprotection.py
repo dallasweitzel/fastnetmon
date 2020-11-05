@@ -21,7 +21,7 @@ while True:
     for i in thedict:
       #print(i)
       for e in i:
-        print(i[e])
+        #print(i[e])
         #print(e)
         ip = i[e]
         m = re.search(r"(\d+\.\d+\.\d+\.\d+)\/\d+", ip)
@@ -35,15 +35,15 @@ while True:
     for i in ips:
       #print("IP: "+i)
       if i not in active:
-        print("Not in active")
+        #print("Not in active")
         active.append(i)
-
+        print("DDOS HIT: "+str(i))
 
     # lets check to see if a ddos is gone
     for i in active:
       #print("Active IP: "+i)
       if i not in ips:
-        print("Not longer in IPS")
+        print("DDOS is gone: "+str(i))
         active.remove(i)
   except Exception as ex:
     pass
