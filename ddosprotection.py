@@ -8,4 +8,4 @@ datadict = {}
 data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 for i in datadict:
-  print(i)
+  print(datadict[i])
