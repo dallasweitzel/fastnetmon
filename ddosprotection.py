@@ -8,6 +8,7 @@ data = ""
 datadict = {}
 thedict = {}
 ips = []
+active = []
 data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 thedict = datadict['values']
@@ -27,3 +28,6 @@ for i in thedict:
 
 for i in ips:
   print("IP: "+i)
+  for ii in active:
+    if not i == ii:
+      print("We do not have it yet")
