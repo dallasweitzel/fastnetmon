@@ -8,6 +8,6 @@ datadict = {}
 thedict = {}
 data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
-thedict = datadict['values'])
+thedict = datadict['values']
 for i in datadict:
   print(i)
