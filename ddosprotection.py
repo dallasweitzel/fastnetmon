@@ -6,7 +6,7 @@ password = '3110'
 data = ""
 datadict = {}
 data = requests.get(url, auth=(username, password)).content
-json_object = json.loads(data)
+json_object = json.load(data)
 print(json_object)
 
 #for i in datadict:
