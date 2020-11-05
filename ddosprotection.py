@@ -9,8 +9,8 @@ data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 print(str(data))
 
-for i in datadict[1]:
-  line = datadict[i]
+for i in datadict:
+  line = datadict[0][i]
   print("Each: "+str(line))
   for k in line:
     print(str(k))
