@@ -10,6 +10,7 @@ data = ""
 thedict = {}
 tracking = {}
 tracking['64.62.238.202'] = '64.62.238.2'
+tracking['64.62.238.203'] = '64.62.238.2'
 active = []
 activeddos = []
 datadict = {}
@@ -40,10 +41,11 @@ while True:
         #print("Not in active")
         active.append(i)
         print("DDOS HIT: "+str(i))
-        if i not in activeddos:
-          print("We set a active ddos for cgnat"+str(tracking[i]))
-          tracking[i]
-          activeddos.append(tracking[i])
+        thecgnat = ""
+        thecgnat = tracking[i]
+        if thecgnat not in activeddos:
+          print("We set a active ddos for cgnat"+str(thecgnat))
+          activeddos.append(thecgnat)
     # lets check to see if a ddos is gone
     for i in active:
       #print("Active IP: "+i)
