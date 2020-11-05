@@ -11,4 +11,4 @@ datadict = json.loads(data)
 thedict = datadict['values']
 for i in thedict:
   for e in i:
-    print(e[1])
+    print(thedict[e])
