@@ -16,6 +16,9 @@ for i in thedict:
     #print(i[e])
     #print(e)
     ip = i[e]
+    m = re.search(r"(\d+\.\d+\.\d+\.\d+)\/\d+", ip)
+    if m:
+      ip = m.group(1)
     key = e
     if e == "ip":
       ips.append(ip)
