@@ -51,6 +51,50 @@ def rochsshadd(blacklistip):
     pass
   return theoutput
 
+def rochsshdel(blacklistip):
+  import paramiko
+  import time
+  ip = "204.16.58.150"
+  username = "admin"
+  password = "3110"
+  port = 22
+  conntimeout = 10
+  cmdtimeout = 10
+  theoutput = []
+  # lets remove any new lines
+  ip = ip.rstrip("\n\r")
+  theoutput = []
+  try:
+    ssh = paramiko.SSHClient()
+    m = re.search(r"\d+\.\d+\.\d+\.\d+", blacklistip)
+    if m:
+      ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+      #print('connecting to %s' % ip + 'end')
+      ssh.connect(hostname=str(ip), port=str(port), username=str(username), password=str(password), look_for_keys=False, allow_agent=False, timeout=float(conntimeout))
+      #print('Successfully connected to %s' % ip)
+      remote_conn = ssh.invoke_shell()
+      time.sleep(0.300)
+      thecmd = []
+      #thecmd.append(":execute \"/routing bgp network add network="+str(blacklistip)+" comment="+str(blacklistip)+" synchronize=no; :delay 10s; /routing bgp network remove [find comment="+str(blacklistip)+"];\"")
+      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=accept place-before=0;\"")
+      #thecmd.append(":execute \"/routing filter find; /routing filter add chain=ebgp-out comment="+str(blacklistip)+" disabled=no prefix="+str(blacklistip)+" prefix-length=32 set-bgp-communities=6939:666 action=passthrough place-before=0\"")
+      #thecmd.append(":execute \"/ip route add comment="+str(blacklistip)+" distance=1 dst-address="+str(blacklistip)+" type=blackhole\"")
+      thecmd.append(":log info \"blackhole removal: "+str(blacklistip)+"\";")
+      for cmd in thecmd:
+        stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout))
+        time.sleep(0.300)
+      theoutput = stdout.readlines()
+      ssh.close()
+    if ssh:
+      ssh.close()
+  except Exception as e:
+    if ssh:
+      ssh.close()
+      logging.info("Could not ssh to rochfiber"+str(e))
+      #print("closed ssh conn"+str(e))
+    pass
+  return theoutput
+
 def ssh(ip,username,password,port,thecmd,conntimeout,cmdtimeout):
   import paramiko
   import time
@@ -127,17 +171,18 @@ while True:
     # lets check to see if a ddos is gone, we only want to remove if all the ddos are gone
     for i in active:
       #print("Active IP: "+i)
-      if i not in ips:
-        print("We are just removing the blackhole "+str(i))
-        #once we do this once, lets remove it from active
-        active.remove(i)
-        #rochsshdel(str(i))
       if len(ips) == 0:
         print("DDOS is gone: "+str(i))
         active.remove(i)
+        rochsshdel(str(i))
         cgnatcmd = ":put \"OK\"; :log info \"blackhole removed: "+str(i)+"\"; :global ddosdetected 0"
         #print(str(cgnatcmd))
-        thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
+        ssh(str(i),'admin','3110',"22",cgnatcmd,"10","10")
+      #if i not in ips:
+      #  print("We are just removing the blackhole "+str(i))
+      #  active.remove(i)
+      #  #once we do this once, lets remove it from active
+      #  #rochsshdel(str(i))
   except Exception as ex:
     print("Woo, "+str(ex))
     pass
