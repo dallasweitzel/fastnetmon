@@ -94,40 +94,45 @@ parsed_details = json.loads(stdin_data)
 #logging.info("Decoded details from JSON: " + pprint.pformat(parsed_details))
 # You can use attack details in this form:
 try:
-  gip = str(parsed_details['ip'])
-  gip = "64.62.238.202"
-  #logging.info("Action: " + str(parsed_details['ip'] + " " + parsed_details['action']))
-  #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_flows']))
-  #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_traffic']))
-  #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_pps']))
-  # lets flip the cgnat
-  cgnatcmd = ":put \"OK\"; :log info \"blackhole test: "+str(gip)+"\"; :global ddosdetected 3"
-  thereturn = ""
-  retries = 2
-  retriescnt = 0
-  while len(thereturn) == 0 and retriescnt < retries:
-    retriescnt = retriescnt + 1
-    logging.info("Action: "+str(cgnatcmd))
-    thereturn = ssh(gip,'admin','3110',"22",cgnatcmd,"5","5")
-    logging.info("Action return: "+str(thereturn))
-    logging.info("Action: "+str(len(thereturn)))
-    time.sleep(5)
-  if len(thereturn) == 0:
-    logging.info("Action: Failed to ssh to cgnat to stop the attack: "+str(gip))
-  # lets blackhole at roch
-  thereturn = ""
-  retries = 10
-  retriescnt = 0
-  while len(thereturn) == 0 and retriescnt < retries:
-    retriescnt = retriescnt + 1
-    #logging.info("Action: "+str(rochcmd))
-    thereturn = rochssh(gip)
-    logging.info("Action return: "+str(thereturn))
-    logging.info("Action: "+str(len(thereturn)))
-    time.sleep(5)
-  if len(thereturn) == 0:
-    logging.info("Action: Failed to ssh to Roch to stop the attack: 204.16.58.150")
-# + parsed_details['attack_details']['total_incoming_flows'])
+  # need to find out if this is ban or unban
+  gaction = parsed_details['action']
+  if gaction == "ban":
+    gip = str(parsed_details['ip'])
+    gip = "64.62.238.202"
+    #logging.info("Action: " + str(parsed_details['ip'] + " " + parsed_details['action']))
+    #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_flows']))
+    #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_traffic']))
+    #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_pps']))
+    # lets flip the cgnat
+    cgnatcmd = ":put \"OK\"; :log info \"blackhole test: "+str(gip)+"\"; :global ddosdetected 3"
+    thereturn = ""
+    retries = 2
+    retriescnt = 0
+    while len(thereturn) == 0 and retriescnt < retries:
+      retriescnt = retriescnt + 1
+      logging.info("Action: "+str(cgnatcmd))
+      #thereturn = ssh(gip,'admin','3110',"22",cgnatcmd,"5","5")
+      logging.info("Action return: "+str(thereturn))
+      logging.info("Action: "+str(len(thereturn)))
+      time.sleep(5)
+    if len(thereturn) == 0:
+      logging.info("Action: Failed to ssh to cgnat to stop the attack: "+str(gip))
+    # lets blackhole at roch
+    thereturn = ""
+    retries = 10
+    retriescnt = 0
+    while len(thereturn) == 0 and retriescnt < retries:
+      retriescnt = retriescnt + 1
+      #logging.info("Action: "+str(rochcmd))
+      #thereturn = rochssh(gip)
+      logging.info("Action return: "+str(thereturn))
+      logging.info("Action: "+str(len(thereturn)))
+      time.sleep(5)
+    if len(thereturn) == 0:
+      logging.info("Action: Failed to ssh to Roch to stop the attack: 204.16.58.150")
+  if gaction == "unban":
+    #
+  # + parsed_details['attack_details']['total_incoming_flows'])
 except Exception as ex:
   logging.info("Action Error: "+str(ex))
 
