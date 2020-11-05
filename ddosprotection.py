@@ -13,5 +13,5 @@ for i in thedict:
   print(i)
   for e in i:
     print(i[e])
-    print(i[0])
+    print(i[1][e])
  
