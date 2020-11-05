@@ -7,6 +7,33 @@ username = 'admin'
 password = '3110'
 data = ""
 
+def ssh(ip,username,password,port,thecmd,conntimeout,cmdtimeout):
+  import paramiko
+  import time
+  theoutput = []
+  # lets remove any new lines
+  ip = ip.rstrip("\n\r")
+  theoutput = []
+  try:
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    #print('connecting to %s' % ip + 'end')
+    ssh.connect(hostname=str(ip), port=str(port), username=str(username), password=str(password), look_for_keys=False, allow_agent=False, timeout=float(conntimeout))
+    #print('Successfully connected to %s' % ip)
+    remote_conn = ssh.invoke_shell()
+    time.sleep(0.001)
+    stdin,stdout,stderr = ssh.exec_command(thecmd, timeout=float(cmdtimeout))
+    theoutput = stdout.readlines()
+    ssh.close()
+    if ssh:
+      ssh.close()
+  except Exception as e:
+    if ssh:
+      ssh.close()
+      #print("closed ssh conn"+str(e))
+    pass
+  return theoutput
+
 thedict = {}
 #tracking = {}
 #tracking['64.62.238.202'] = '64.62.238.2'
@@ -35,7 +62,6 @@ while True:
         key = e
         if e == "ip":
           ips.append(ip)
- 
     # looking for new ddos
     for i in ips:
       #print("IP: "+i)
@@ -45,9 +71,10 @@ while True:
         print("DDOS HIT: "+str(i))
         #thecgnat = ""
         #thecgnat = tracking[i]
-        if thecgnat not in activeddos:
-          print("We set a active ddos for cgnat"+str(thecgnat))
-          activeddos.append(thecgnat)
+        if i not in activeddos:
+          print("We set a active ddos for cgnat"+str(i))
+          activeddos.append(i)
+          #ssh(gip,'admin','3110',"22",cgnatcmd,"5","5")
         else:
           print("")
     # lets check to see if a ddos is gone
