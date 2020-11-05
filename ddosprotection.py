@@ -5,10 +5,7 @@ username = 'admin'
 password = '3110'
 data = ""
 datadict = {}
-blackholed_hosts = requests.get(url, auth=(username, password)).content
+data = requests.get(url, auth=(username, password)).content
 #blackholed_hosts = json.loads(data)
-
-blackholed_ip_addresses = []
-for blackholed_entity in blackholed_hosts.json()['values']:
-    blackholed_ip = blackholed_entity['ip'].replace('/32', '', -1)
-    blackholed_ip_addresses.append(blackholed_ip)
+for i in data:
+  print(i)
