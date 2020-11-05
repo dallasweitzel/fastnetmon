@@ -100,6 +100,7 @@ def rochsshdel():
     while not channel.exit_status_ready():
       time.sleep(1)
       #time.sleep(0.300)
+    stdout = channel.makefile("rb")
     theoutput = stdout.readlines()
     ssh.close()
     if ssh:
