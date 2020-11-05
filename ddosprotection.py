@@ -8,8 +8,8 @@ datadict = {}
 data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 print(str(data))
-for i in datadict:
-  line = datadict[i]
-  for k in line:
-    if k == "name":
-      gname = datadict[i][k]
+#for i in datadict:
+#  line = datadict[i]
+#  for k in line:
+#    if k == "name":
+#      gname = datadict[i][k]
