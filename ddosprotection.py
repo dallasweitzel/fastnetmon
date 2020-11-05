@@ -10,4 +10,4 @@ output_json = json.loads(data)
 for i in output_json:
   print(i)
   for k in output_json[i]:
-          print(k, output_json[0])
+          print(k, output_json[1])
