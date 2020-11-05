@@ -48,7 +48,7 @@ def rochsshadd(blacklistip):
     if ssh:
       ssh.close()
       logging.info("Could not ssh to rochfiber"+str(e))
-      #print("closed ssh conn"+str(e))
+      print("closed ssh conn"+str(e))
     pass
   return theoutput
 
@@ -79,8 +79,8 @@ def rochsshdel():
     thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
-      stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout))
-      time.sleep(1)
+      stdin,stdout,stderr = ssh.exec_command(cmd, timeout=float(cmdtimeout), get_pty=True)
+      time.sleep(5)
     theoutput = stdout.readlines()
     ssh.close()
     if ssh:
@@ -89,7 +89,7 @@ def rochsshdel():
     if ssh:
       ssh.close()
       logging.info("Could not ssh to rochfiber"+str(e))
-      #print("closed ssh conn"+str(e))
+      print("closed ssh conn"+str(e))
     pass
   return theoutput
 
