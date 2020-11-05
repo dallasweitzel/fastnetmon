@@ -14,6 +14,7 @@ active = []
 while True:
   data = requests.get(url, auth=(username, password)).content
   datadict = json.loads(data)
+  print(data)
   datadict = {}
   thedict = datadict['values']
   # making list
