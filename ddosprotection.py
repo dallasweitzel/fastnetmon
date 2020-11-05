@@ -68,7 +68,7 @@ while True:
       if i not in active:
         #print("Not in active")
         active.append(i)
-        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
+        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 1"
         #print(str(cgnatcmd))
         thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
         print("DDOS HIT: "+str(i))
@@ -85,7 +85,7 @@ while True:
       if i not in ips:
         print("DDOS is gone: "+str(i))
         active.remove(i)
-        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 4"
+        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 0"
         #print(str(cgnatcmd))
         thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
   except Exception as ex:
