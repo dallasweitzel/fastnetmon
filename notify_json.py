@@ -99,6 +99,7 @@ try:
   if gaction == "ban":
     gip = str(parsed_details['ip'])
     gip = "64.62.238.202"
+    logging.info("DDOS Hit: "+str(gip))
     #logging.info("Action: " + str(parsed_details['ip'] + " " + parsed_details['action']))
     #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_flows']))
     #logging.info("Action: " + str(parsed_details['attack_details']['total_incoming_traffic']))
@@ -110,16 +111,16 @@ try:
     retriescnt = 0
     while len(thereturn) == 0 and retriescnt < retries:
       retriescnt = retriescnt + 1
-      logging.info("Action: "+str(cgnatcmd))
+      logging.info("DDOS Hit retry to ssh to cgnat")
       #thereturn = ssh(gip,'admin','3110',"22",cgnatcmd,"5","5")
-      logging.info("Action return: "+str(thereturn))
-      logging.info("Action: "+str(len(thereturn)))
+      #logging.info("Action return: "+str(thereturn))
+      #logging.info("Action: "+str(len(thereturn)))
       time.sleep(5)
     if len(thereturn) == 0:
-      logging.info("Action: Failed to ssh to cgnat to stop the attack: "+str(gip))
+      logging.info("DDOS Hit: Failed to ssh to cgnat to stop the attack: "+str(gip))
     # lets blackhole at roch
     thereturn = ""
-    retries = 10
+    retries = 2
     retriescnt = 0
     while len(thereturn) == 0 and retriescnt < retries:
       retriescnt = retriescnt + 1
