@@ -11,7 +11,7 @@ print(str(data))
 
 for i in datadict:
   line = datadict[i]
-  print(str(line))
+  print("Each: "+str(line))
   for k in line:
     print(str(k))
     #if k == "name":
