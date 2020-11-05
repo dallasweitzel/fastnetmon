@@ -10,5 +10,5 @@ data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 thedict = datadict['values']
 for i in thedict:
-  for e in i:
-    print(type(e))
+  for e in i[0]:
+    print(e)
