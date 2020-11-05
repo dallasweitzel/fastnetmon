@@ -90,7 +90,7 @@ def rochsshdel():
     time.sleep(0.300)
     thecmd = []
     #thecmd.append("/routing bgp network remove [find comment=blacklisted];")
-    thecmd.append("/routing bgp network remove [find comment=blacklisted]; /routing filter remove [find comment=blacklisted and chain=ebgp-out]; /ip rou remove [find comment=blacklisted];")
+    thecmd.append("/routing bgp network remove [find comment=blacklisted]; /routing filter remove [find comment=blacklisted and chain=ebgp-out]; :do {/ip rou remove [find comment=blacklisted];} on-error={:put \"OK\"}")
     #thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
