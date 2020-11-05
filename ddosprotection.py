@@ -29,5 +29,5 @@ for i in thedict:
 for i in ips:
   print("IP: "+i)
   for ii in active:
-    if not i == ii:
-      print("We do not have it yet")
+    if i not in active:
+      print("Not in active")
