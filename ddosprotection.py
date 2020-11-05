@@ -10,7 +10,7 @@ datadict = json.loads(data)
 print(str(data))
 
 for i in datadict:
-  line = datadict[1][i]
+  line = datadict[i][1]
   print("Each: "+str(line))
   for k in line:
     print(str(k))
