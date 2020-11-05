@@ -196,7 +196,7 @@ while True:
           rochsshdel()
           removalisdone = 1
           print("removal commands sent")
-          time.sleep(30)
+          #time.sleep(30)
         cgnatcmd = ":put \"OK\"; :log info \"blackhole removed: "+str(i)+"\"; :global ddosdetected 0"
         #print(str(cgnatcmd))
         print("DDOS is gone, flipping redundancies...: "+str(i))
