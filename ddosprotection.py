@@ -7,5 +7,5 @@ data = ""
 datadict = {}
 data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
-for i in datadict:
+for i in datadict['values']:
   print(datadict[i])
