@@ -8,8 +8,10 @@ password = '3110'
 data = ""
 
 thedict = {}
-
+tracking = {}
+tracking['64.62.238.202'] = '64.62.238.2'
 active = []
+activeddos = []
 datadict = {}
 while True:
   data = requests.get(url, auth=(username, password)).content
@@ -38,7 +40,10 @@ while True:
         #print("Not in active")
         active.append(i)
         print("DDOS HIT: "+str(i))
-
+        if i not in activeddos:
+          print("We set a active ddos for cgnat"+str(tracking[i]))
+          tracking[i]
+          activeddos.append(tracking[i])
     # lets check to see if a ddos is gone
     for i in active:
       #print("Active IP: "+i)
