@@ -59,8 +59,8 @@ def rochsshdel():
   username = "admin"
   password = "3110"
   port = 22
-  conntimeout = 10
-  cmdtimeout = 10
+  conntimeout = 60
+  cmdtimeout = 60
   theoutput = []
   # lets remove any new lines
   ip = ip.rstrip("\n\r")
