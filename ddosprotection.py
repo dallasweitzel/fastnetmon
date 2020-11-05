@@ -28,6 +28,5 @@ for i in thedict:
 
 for i in ips:
   print("IP: "+i)
-  for ii in active:
-    if i not in active:
-      print("Not in active")
+  if i not in active:
+    print("Not in active")
