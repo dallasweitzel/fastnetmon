@@ -79,13 +79,13 @@ while True:
         #  activeddos.append(i)
         #else:
         #  print("")
-    # lets check to see if a ddos is gone
+    # lets check to see if a ddos is gone, we only want to remove if all the ddos are gone
     for i in active:
       #print("Active IP: "+i)
-      if i not in ips:
+      if len(ips) == 0:
         print("DDOS is gone: "+str(i))
         active.remove(i)
-        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 0"
+        cgnatcmd = ":put \"OK\"; :log info \"blackhole removed: "+str(i)+"\"; :global ddosdetected 0"
         #print(str(cgnatcmd))
         thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
   except Exception as ex:
