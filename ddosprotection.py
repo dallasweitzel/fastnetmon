@@ -1,5 +1,14 @@
 import requests
-url = 'http://157.245.130.37:10007/license'
+url = 'http://157.245.130.37:10007/blackhole'
 username = 'admin'
 password = '3110'
-print(requests.get(url, auth=(username, password)).content)
+data = ""
+datadict = {}
+data = requests.get(url, auth=(username, password)).content
+datadict = json.loads(data)
+print(str(data))
+for i in datadict:
+  line = datadict[i]
+  for k in line:
+    if k == "name":
+      gname = datadict[i][k]
