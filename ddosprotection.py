@@ -11,12 +11,15 @@ data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 thedict = datadict['values']
 for i in thedict:
-  print(i)
+  #print(i)
   for e in i:
-    print(i[e])
-    print(e)
+    #print(i[e])
+    #print(e)
     ip = i[e]
     key = e
     if e == "ip":
       ips.append(ip)
  
+
+for i in ips:
+  print("IP: "+i)
