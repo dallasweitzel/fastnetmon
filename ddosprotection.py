@@ -70,8 +70,8 @@ while True:
       if i not in active:
         #print("Not in active")
         active.append(i)
-        print(str(cgnatcmd))
         cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
+        print(str(cgnatcmd))
         thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
         print("DDOS HIT: "+str(i))
         #thecgnat = ""
@@ -88,5 +88,6 @@ while True:
         print("DDOS is gone: "+str(i))
         active.remove(i)
   except Exception as ex:
+    print("Woo, "+str(ex))
     pass
   time.sleep(1)
