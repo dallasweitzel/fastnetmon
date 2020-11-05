@@ -95,7 +95,7 @@ def rochsshdel():
     #thecmd.append("/ip rou remove [find comment=blacklisted];")
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
-      stdin,stdout,stderr = channel.exec_command(cmd, timeout=60)
+      stdin,stdout,stderr = channel.exec_command(cmd)
     while not channel.exit_status_ready():
       time.sleep(1)
       #time.sleep(0.300)
