@@ -68,16 +68,16 @@ while True:
       if i not in active:
         #print("Not in active")
         active.append(i)
+        cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
+        ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
         #print("DDOS HIT: "+str(i))
         #thecgnat = ""
         #thecgnat = tracking[i]
-        if i not in activeddos:
-          print("We set a active ddos for cgnat "+str(i))
-          activeddos.append(i)
-          cgnatcmd = ":put \"OK\"; :log info \"blackhole: "+str(i)+"\"; :global ddosdetected 3"
-          ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
-        else:
-          print("")
+        #if i not in activeddos:
+        #  print("We set a active ddos for cgnat "+str(i))
+        #  activeddos.append(i)
+        #else:
+        #  print("")
     # lets check to see if a ddos is gone
     for i in active:
       #print("Active IP: "+i)
