@@ -10,4 +10,4 @@ data = requests.get(url, auth=(username, password)).content
 datadict = json.loads(data)
 thedict = datadict['values']
 for i in thedict:
-  print(i)
+  print(thedict[i])
