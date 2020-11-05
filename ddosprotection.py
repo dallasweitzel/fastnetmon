@@ -10,12 +10,11 @@ data = ""
 thedict = {}
 ips = []
 active = []
-
+datadict = {}
 while True:
   data = requests.get(url, auth=(username, password)).content
   datadict = json.loads(data)
   if len(data) > 0:
-    datadict = {}
     thedict = datadict['values']
     # making list
     for i in thedict:
