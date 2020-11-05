@@ -95,6 +95,8 @@ def rochsshdel():
     thecmd.append(":log info \"blackhole removal\";")
     for cmd in thecmd:
       stdin,stdout,stderr = ssh.exec_command(cmd, timeout=60)
+    while not ssh.exit_status_ready():
+      time.sleep(1)
       #time.sleep(0.300)
     theoutput = stdout.readlines()
     ssh.close()
