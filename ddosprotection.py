@@ -2,11 +2,12 @@ import requests
 import json
 import re
 import time
+import logging
 url = 'http://157.245.130.37:10007/blackhole'
 username = 'admin'
 password = '3110'
 data = ""
-
+logging.basicConfig(filename='/tmp/fastnetmon_notify_script.log', format='%(asctime)s %(message)s', level=logging.INFO)
 def rochsshadd(blacklistip):
   import paramiko
   import time
