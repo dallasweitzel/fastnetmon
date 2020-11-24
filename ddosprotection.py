@@ -48,7 +48,7 @@ def rochsshadd(blacklistip):
     if ssh:
       ssh.close()
       logging.info("Could not ssh to rochfiber"+str(e))
-      print("closed ssh conn"+str(e))
+      print(time.ctime()+" closed ssh conn"+str(e))
     pass
   return theoutput
 
@@ -109,7 +109,7 @@ def rochsshdel():
     if ssh:
       ssh.close()
       logging.info("Could not ssh to rochfiber"+str(e))
-      print("closed ssh conn"+str(e))
+      print(time.ctime()+" closed ssh conn"+str(e))
     pass
   return theoutput
 
@@ -180,7 +180,7 @@ while True:
           #print(str(cgnatcmd))
           thereturn = ssh(i,'admin','3110',"22",cgnatcmd,"10","10")
           rochsshadd(str(i))
-          print("DDOS HIT: "+str(i))
+          print(time.ctime()+" DDOS HIT: "+str(i))
           #thecgnat = ""
           #thecgnat = tracking[i]
           #if i not in activeddos:
@@ -193,16 +193,16 @@ while True:
     for i in active:
       #print("Active IP: "+i)
       if len(ips) == 0:
-        print("DDOS is gone, removing blackholes and waiting...: "+str(i))
+        print(time.ctime()+" DDOS is gone, removing blackholes and waiting...: "+str(i))
         active.remove(i)
         if removalisdone == 0:
           rochsshdel()
           removalisdone = 1
-          print("removal commands sent")
+          print(time.ctime()+" removal commands sent")
           time.sleep(10)
         cgnatcmd = ":put \"OK\"; :log info \"blackhole removed: "+str(i)+"\"; :global ddosdetected 0"
         #print(str(cgnatcmd))
-        print("DDOS is gone, flipping redundancies...: "+str(i))
+        print(time.ctime()+" DDOS is gone, flipping redundancies...: "+str(i))
         ssh(str(i),'admin','3110',"22",cgnatcmd,"10","10")
     removalisdone = 0
       #print("Active IP: "+i)
@@ -212,6 +212,6 @@ while True:
       #  #once we do this once, lets remove it from active
       #  #rochsshdel(str(i))
   except Exception as ex:
-    print("Woo, "+str(ex))
+    print(time.ctime()+" Woo, "+str(ex))
     pass
   time.sleep(1)
